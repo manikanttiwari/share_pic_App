@@ -4,13 +4,12 @@ import {
     StyleSheet,
     ToastAndroid,
     View,
-    Text,
     ActivityIndicator,
-    Platform
 } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob'
 import Share from 'react-native-share';
 
+import { NotFound } from '../components/Element'
 import { getImages } from "../services/fetchApi"
 import NotificationRow from '../components/NotificationRow'
 
@@ -24,6 +23,9 @@ export default class Notifications extends React.Component {
         }
     }
     async componentDidMount() {
+        this.loadImages()
+    }
+    loadImages = async () => {
         let response = await getImages().catch(err => console.log(err))
         if (response.status == true) {
             this.setState({
@@ -73,9 +75,7 @@ export default class Notifications extends React.Component {
                     renderItem={({ item, index }) => <NotificationRow key={index} item={item} shareImage={this.shareImage} />}
                     keyExtractor={item => item.id}
                     contentContainerStyle={{ marginTop: 10, paddingBottom: 10 }}
-                /> : <Text>
-                        Notification not found
-                    </Text>}
+                /> : <NotFound txt={"Notification not found"} onPress={() => this.setState({ loading: true }, this.loadImages)} />}
             </View>
         )
     }
