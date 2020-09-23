@@ -8,18 +8,20 @@ import {
     Dimensions, TouchableNativeFeedback, Share
 } from 'react-native';
 const { width } = Dimensions.get("window")
-export default NotificationRow = ({ item, shareImage }) => {
+export default NotificationRow = ({ item, shareImage, navigation }) => {
     return (
         // 
         <View style={styles.noti_main_row}>
             <View >
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: item.url,
-                    }}
-                // resizeMode="contain"
-                />
+                <TouchableNativeFeedback style={styles.share_image} onPress={() => navigation.navigate("FullImage", { item })}>
+                    <Image
+                        style={styles.image}
+                        source={{
+                            uri: item.url,
+                        }}
+                    // resizeMode="contain"
+                    />
+                </TouchableNativeFeedback>
                 <TouchableNativeFeedback style={styles.share_image} onPress={() => shareImage(item.url)}>
                     <Image
                         style={styles.share_image}

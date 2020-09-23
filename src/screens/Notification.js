@@ -42,7 +42,7 @@ export default class Notifications extends React.Component {
         RNFetchBlob.fetch('GET', url).then((res) => {
             return res.base64()
         }).then(base64Str => {
-            console.log("hello", base64Str)
+            // console.log("hello", base64Str)
             let options = {
                 type: 'image/png',
                 title: 'Share via',
@@ -72,7 +72,7 @@ export default class Notifications extends React.Component {
                 {/* <StatusBar barStyle="dark-content" /> */}
                 {notifications.length ? <FlatList
                     data={notifications}
-                    renderItem={({ item, index }) => <NotificationRow key={index} item={item} shareImage={this.shareImage} />}
+                    renderItem={({ item, index }) => <NotificationRow navigation={this.props.navigation} key={index} item={item} shareImage={this.shareImage} />}
                     keyExtractor={item => item.id}
                     contentContainerStyle={{ marginTop: 10, paddingBottom: 10 }}
                 /> : <NotFound txt={"Notification not found"} onPress={() => this.setState({ loading: true }, this.loadImages)} />}
